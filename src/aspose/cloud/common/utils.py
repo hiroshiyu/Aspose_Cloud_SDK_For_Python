@@ -72,10 +72,7 @@ class Utils:
         c.close();
         fp.close();
         
-        if(headerType == "JSON"):
-            jsonData = json.loads(self.buf_uploadFile.getvalue())
-            print jsonData
-        return result;
+        return self.buf_uploadFile.getvalue();
               
     @staticmethod
     def sign(self, url_to_sign):
