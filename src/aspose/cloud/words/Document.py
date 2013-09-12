@@ -19,7 +19,20 @@ class WordDocument(object):
                 raise Exception("Please specify complete documents and import format modes")
             str_uri = Product.base_product_uri + "/words/" + self.file_name + "/appendDocument"
             signed_uri = Utils.sign(Utils(), str_uri)
-            data = {"DocumentEntries" : append_docs}
+            
+            post_array = []
+            i = 0
+            for val in append_docs:
+                d= dict()
+                if source_folder != "":
+                    href = source_folder +"\\"+val
+                else:
+                    href= val
+                d.update({ "Href" : href, "ImportFormatMode" : import_format_modes[i]})
+                post_array.append(d);
+                i = i+1
+            data = {"DocumentEntries" : post_array}
+            
             json_data = json.dumps(data)
             response_stream = Utils.process_command(Utils(), signed_uri, "POST", "json", json_data)
             v_output = Utils.validate_output(Utils(), response_stream)
