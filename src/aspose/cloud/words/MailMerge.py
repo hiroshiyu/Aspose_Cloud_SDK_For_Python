@@ -20,7 +20,7 @@ class WordMailMerge(object):
             v_output = Utils.validate_output(Utils(), response_stream)
             if v_output == "":
                 folder = Folder()
-                output_stream = folder.get_file(json_data["Document"]["FileName"])
+                output_stream = folder.get_file(json_data["Document"]["FileName"].__str__())
                 output_path = AsposeApp.output_location + file_name
                 Utils.save_file(Utils(), output_stream, output_path)
                 return output_path
@@ -42,7 +42,7 @@ class WordMailMerge(object):
             v_output = Utils.validate_output(Utils(), response_stream)
             if v_output == "":
                 folder = Folder()
-                output_stream = folder.get_file(json_data["Document"]["FileName"])
+                output_stream = folder.get_file(json_data["Document"]["FileName"].__str__())
                 output_path = AsposeApp.output_location + file_name
                 Utils.save_file(Utils(), output_stream, output_path)
                 return output_path
@@ -64,7 +64,7 @@ class WordMailMerge(object):
             v_output = Utils.validate_output(Utils(), response_stream)
             if v_output == "":
                 folder = Folder()
-                output_stream = folder.get_file(json_data["Document"]["FileName"])
+                output_stream = folder.get_file(json_data["Document"]["FileName"].__str__())
                 output_path = AsposeApp.output_location + file_name
                 Utils.save_file(Utils(), output_stream, output_path)
                 return output_path
