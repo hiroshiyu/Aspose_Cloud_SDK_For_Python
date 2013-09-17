@@ -141,7 +141,7 @@ class WordExtractor(object):
             json_data = json.loads(response_stream)
             if json_data["Code"] == 200:
                 for item in json_data["DrawingObjects"]["List"]:
-                    self.get_drawing_object(item["link"]["Href"], output_path)
+                    self.get_drawing_object(item["link"]["Href"].__str__(), output_path)
             else:
                 return False
         except:
