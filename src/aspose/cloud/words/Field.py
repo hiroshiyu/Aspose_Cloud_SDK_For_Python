@@ -13,7 +13,7 @@ class WordField(object):
                 raise Exception("Please Specify File Name")
             field_arr = {"Format" : text_format , "Alignment" : alignment, "IsTop" : str(is_top), "SetPageNumberOnFirstPage" : str(set_page_number_on_first_page)}
             json_data = json.dumps(field_arr)
-            str_uri = Product.base_product_uri + "/words/" + file_name + "/insertPageNumber"
+            str_uri = Product.base_product_uri + "/words/" + file_name + "/insertPageNumbers"
             signed_uri = Utils.sign(Utils(), str_uri)
             response_stream = Utils.process_command(Utils(), signed_uri, "POST", "json", json_data)
             v_output = Utils.validate_output(Utils(), response_stream)
