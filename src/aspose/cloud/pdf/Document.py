@@ -31,9 +31,9 @@ class PdfDocument(object):
                 raise Exception("Please Specify New Pdf File Name")
             if source_folder == "":
                 str_uri = Product.base_product_uri + "/pdf/" + base_pdf + "/appendDocument?appendFile=" + new_pdf
-                if not start_page.empty:
+                if start_page > 0:
                     str_uri += "&startPage=" + str(start_page)
-                if not end_page.empty:
+                if end_page > 0:
                     str_uri += "&endPage=" + str(end_page) 
             else:
                 str_uri = Product.base_product_uri + "/pdf/" + base_pdf + "/appendDocument?appendFile=" + new_pdf
@@ -45,11 +45,14 @@ class PdfDocument(object):
             response_stream = Utils.process_command(Utils(), signed_uri, "POST", "", "")
             v_output = Utils.validate_output(Utils(), response_stream)
             if v_output == "":
-                folder_obj = Folder()
-                output_stream = folder_obj.get_file(source_folder + "/" + base_pdf)
-                output_path = AsposeApp.output_location + base_pdf
-                Utils.save_file(Utils(), output_stream, output_path)
-                return output_path
+    folder_obj = Folder()
+    if source_folder == "":
+     output_stream = folder_obj.get_file(base_pdf) 
+    else:
+     output_stream = folder_obj.get_file(source_folder + "/" + base_pdf)
+    output_path = AsposeApp.output_location + base_pdf
+    Utils.save_file(Utils(), output_stream, output_path)
+    return output_path
             else:
                 return v_output
         except:
