@@ -97,7 +97,7 @@ class SlideDocument(object):
             v_output = Utils.validate_output(Utils(), response_stream)
             if(v_output == ""):
                 folder = Folder()
-                folder.get_file(self.file_name)
+                response_stream = folder.get_file(self.file_name)
                 output_path = AsposeApp.output_location + self.file_name
                 Utils.save_file(Utils(), response_stream, output_path)
                 return output_path
