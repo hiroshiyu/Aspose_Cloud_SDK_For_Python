@@ -241,7 +241,7 @@ class SlideDocument(object):
             response_stream = Utils.process_command(Utils(), signed_uri, "GET", "", "")
             v_output = Utils.validate_output(Utils(), response_stream)
             if(v_output == ""):
-                Utils.save_file(Utils(), response_stream, output_path + Utils.get_filename(Utils(), self.file_name) + "_" + str(slide_number) + "." + save_format)
+                Utils.save_file(Utils(), response_stream, output_path + Utils.get_filename(Utils(), self.file_name) + "." + save_format)
                 return True
             else:
                 return v_output
