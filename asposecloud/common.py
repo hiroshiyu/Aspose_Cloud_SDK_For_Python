@@ -14,26 +14,29 @@ class Utils:
 
     @staticmethod
     def upload_file_binary(local_file, uri):
-        with open(local_file,'rb') as payload:
+        with open(local_file, 'rb') as payload:
             return requests.put(uri, payload, stream=True)
 
     @staticmethod
     def sign(url_to_sign):
-        url_to_sign = url_to_sign.replace(" ", "%20");
-        url = urlparse(url_to_sign);
+        url_to_sign = url_to_sign.replace(" ", "%20")
+        url = urlparse(url_to_sign)
 
         if url.query == "":
             url_part_to_sign = url.scheme + "://" + url.netloc + url.path + "?appSID=" + AsposeApp.app_sid
         else:
-            url_part_to_sign = url.scheme + "://" + url.netloc + url.path + "?" + url.query + "&appSID=" + AsposeApp.app_sid
+            url_part_to_sign = url.scheme + "://" + url.netloc + url.path + "?" + url.query + "&appSID=" + \
+                AsposeApp.app_sid
 
         signature = hmac.new(AsposeApp.app_key, url_part_to_sign, hashlib.sha1).digest().encode('base64')[:-1]
         signature = re.sub('[=_-]', '', signature)
 
         if url.query == "":
-            return url.scheme + "://" + url.netloc + url.path + "?appSID=" + AsposeApp.app_sid + "&signature=" + signature
+            return url.scheme + "://" + url.netloc + url.path + "?appSID=" + AsposeApp.app_sid + "&signature=" + \
+                signature
         else:
-            return url.scheme + "://" + url.netloc + url.path + "?" + url.query + "&appSID=" + AsposeApp.app_sid + "&signature=" + signature
+            return url.scheme + "://" + url.netloc + url.path + "?" + url.query + "&appSID=" + AsposeApp.app_sid + \
+                "&signature=" + signature
 
     @staticmethod
     def append_storage(uri, remote_folder='', storage_type='Aspose', storage_name=''):
@@ -47,7 +50,7 @@ class Utils:
             tmp_uri = tmp_uri + "storage=" + storage_name
 
         if tmp_uri:
-            if string.find(tmp_uri,'?'):
+            if string.find(tmp_uri, '?'):
                 tmp_uri = "&" + tmp_uri
             else:
                 tmp_uri = "?" + tmp_uri
@@ -56,7 +59,7 @@ class Utils:
             if tmp_uri[-1:] == '&':
                 tmp_uri = tmp_uri[:-1]
 
-        if(tmp_uri):
+        if tmp_uri:
             return uri + tmp_uri
         else:
             return uri
@@ -68,8 +71,5 @@ class Utils:
                 f.write(chunk)
 
     @staticmethod
-    def get_filename(file):
-        return os.path.splitext(os.path.basename(file))[0]
-
-
-
+    def get_filename(filename):
+        return os.path.splitext(os.path.basename(filename))[0]
