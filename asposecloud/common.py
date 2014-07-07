@@ -5,12 +5,45 @@ import hashlib
 import re
 import string
 import os
+import json
 
 from urlparse import urlparse
 from asposecloud import AsposeApp
 
 
 class Utils:
+
+    def __init__(self):
+        return
+
+    @staticmethod
+    def build_uri(path, qry_data=None):
+        qry_str = ''
+        for key, value in qry_data.iteritems():
+            qry_str += str(key) + '=' + str(value) + '&'
+
+        if qry_str:
+            uri = path + '?' + qry_str[:-1]
+        else:
+            uri = path
+        return uri
+
+    @staticmethod
+    def validate_result(result):
+        if type(result) == requests.Response:
+            result = result.content
+        elif type(result) == dict:
+            result = json.dumps(result)
+
+        results = ['Unknown file format', 'Unable to read beyond the end of the stream', 'Index was out of range',
+                   'Cannot read that as a ZipFile', 'Not a Microsoft PowerPoint 2007 presentation',
+                   'Index was outside the bounds of the array',
+                   'An attempt was made to move the position before the beginning of the stream']
+        for val in results:
+            if re.search(val, result):
+                return val
+
+        return None
 
     @staticmethod
     def upload_file_binary(local_file, uri):
