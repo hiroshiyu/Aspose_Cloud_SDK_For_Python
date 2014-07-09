@@ -9,6 +9,7 @@ import json
 
 from urlparse import urlparse
 from asposecloud import AsposeApp
+from asposecloud import Product
 
 
 class Utils:
@@ -106,3 +107,26 @@ class Utils:
     @staticmethod
     def get_filename(filename):
         return os.path.splitext(os.path.basename(filename))[0]
+
+    @staticmethod
+    def download_file(remote_filename, output_filename, remote_folder='', storage_type='Aspose', storage_name=None):
+        if remote_folder:
+            remote_filename = remote_folder + '/' + remote_filename
+
+        str_uri = Product.product_uri + 'storage/file/' + remote_filename
+        str_uri = Utils.append_storage(str_uri, '', storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            }, stream=True)
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        Utils.save_file(response, AsposeApp.output_path + output_filename)
+        return AsposeApp.output_path + output_filename

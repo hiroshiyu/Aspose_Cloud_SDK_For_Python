@@ -1,9 +1,106 @@
 __author__ = 'AssadMahmood'
 import requests
+import json
 
 from asposecloud import AsposeApp
 from asposecloud import Product
 from asposecloud.common import Utils
+
+# ========================================================================
+# BUILDER CLASS
+# ========================================================================
+
+
+class Builder:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'words/' + self.filename
+
+    def insert_watermark_image(self, image_file, angle, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/insertWatermarkText'
+        qry = {'imageFile': image_file, 'rotationAngle': angle}
+        str_uri = Utils.build_uri(str_uri,qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+    def insert_watermark_text(self, text, angle, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/insertWatermarkText'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Text': text, 'RotationAngle': angle})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+    def replace_text(self, old_text, new_text, match_case=False, match_whole_word=False,
+                     remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/replaceText'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'OldValue': old_text, 'NewValue': new_text,
+                                'IsMatchCase': match_case, 'IsMatchWholeWord': match_whole_word})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return True
+        else:
+            return validate_output
+
+# ========================================================================
+# CONVERTER CLASS
+# ========================================================================
 
 
 class Converter:
