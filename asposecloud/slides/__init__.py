@@ -43,7 +43,7 @@ class Document:
 
     def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
 
-        str_uri = self.base_uri + '/presentation/documentProperties/' + property_name
+        str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
         signed_uri = Utils.sign(str_uri)
@@ -59,6 +59,86 @@ class Document:
             print response.content
             exit(1)
         return response['DocumentProperty']
+
+    def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+
+        json_data = json.dumps({'Value': property_value})
+
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+        return response['DocumentProperty']
+
+    def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+        return True if response['Code'] == 200 else False
+
+    def delete_all_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+
+        str_uri = self.base_uri + '/documentProperties'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+        return True if response['Code'] == 200 else False
+
+    def add_custom_property(self, properties_list, remote_folder='', storage_type='Aspose', storage_name=None):
+
+        json_data = json.dumps(properties_list)
+
+        str_uri = self.base_uri + '/documentProperties'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+        return response
 
     def get_slide_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/slides'
