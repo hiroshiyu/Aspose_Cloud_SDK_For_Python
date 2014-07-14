@@ -6,6 +6,76 @@ from asposecloud import AsposeApp
 from asposecloud import Product
 from asposecloud.common import Utils
 
+
+# ========================================================================
+# MAIL MERGE CLASS
+# ========================================================================
+
+
+class MailMerge:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'words/' + self.filename
+
+    def execute(self, str_xml, with_regions=False, remote_folder='', storage_type='Aspose', storage_name=None):
+        if not str_xml:
+            raise ValueError("str_xml not specified")
+
+        str_uri = self.base_uri + '/executeMailMerge'
+        str_uri = str_uri + '?withRegions=true' if with_regions else str_uri
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, str_xml, headers={
+                'content-type': 'application/xml', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+    def execute_template(self, str_xml, with_regions=False, remote_folder='', storage_type='Aspose', storage_name=None):
+        if not str_xml:
+            raise ValueError("str_xml not specified")
+
+        str_uri = self.base_uri + '/executeTemplate'
+        str_uri = str_uri + '?withRegions=true' if with_regions else str_uri
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, str_xml, headers={
+                'content-type': 'application/xml', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
 # ========================================================================
 # BUILDER CLASS
 # ========================================================================
@@ -24,7 +94,7 @@ class Builder:
     def insert_watermark_image(self, image_file, angle, remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/insertWatermarkText'
         qry = {'imageFile': image_file, 'rotationAngle': angle}
-        str_uri = Utils.build_uri(str_uri,qry)
+        str_uri = Utils.build_uri(str_uri, qry)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
         signed_uri = Utils.sign(str_uri)
