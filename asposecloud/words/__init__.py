@@ -6,6 +6,186 @@ from asposecloud import AsposeApp
 from asposecloud import Product
 from asposecloud.common import Utils
 
+# ========================================================================
+# EXTRACTOR CLASS
+# ========================================================================
+
+
+class Extractor:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'words/' + self.filename
+
+    def get_text(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/textItems'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        output_text = ''
+        for item in response['TextItems']['List']:
+            output_text += item['Text']
+        return output_text
+
+    def get_drawing_object_list(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/drawingObjects'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DrawingObjects']['List']
+
+    def get_ole_data(self, ole_index, ole_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/drawingObjects/' + str(ole_index) + '/oleData'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.save_file(response,
+                                   AsposeApp.output_path + Utils.get_filename(self.filename)
+                                   + '_' + str(ole_index) + '.' + ole_format)
+        else:
+            return validate_output
+
+    def get_image_data(self, image_index, image_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/drawingObjects/' + str(image_index) + '/imagedata'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.save_file(response,
+                                   AsposeApp.output_path + Utils.get_filename(self.filename)
+                                   + '_' + str(image_index) + '.' + image_format)
+        else:
+            return validate_output
+
+    def convert_drawing_object(self, object_index, render_format,
+                               remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/drawingObjects/' + str(object_index) + '?format=' + render_format
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.save_file(response,
+                                   AsposeApp.output_path + Utils.get_filename(self.filename)
+                                   + '_' + str(object_index) + '.' + render_format)
+        else:
+            return validate_output
+
+    @staticmethod
+    def get_drawing_object(self, object_uri, output_path, remote_folder='', storage_type='Aspose', storage_name=None):
+        object_index = object_uri[-1:]
+
+        str_uri = Product.product_uri + 'words/' + object_uri
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        object_info = response['DrawingObject']
+
+        if not object_info['ImageDataLink'] is None:
+            str_uri = Product.product_uri + 'words/' + object_uri + '/imageData'
+            output_path = output_path + 'DrawingObject_' + str(object_index) + '.jpg'
+        elif not object_info['OleDataLink'] is None:
+            str_uri = Product.product_uri + 'words/' + object_uri + '/oleData'
+            output_path = output_path + 'DrawingObject_' + str(object_index) + '.xlsx'
+        else:
+            str_uri = Product.product_uri + 'words/' + object_uri + '?format=jpg'
+            output_path = output_path + 'DrawingObject_' + str(object_index) + '.jpg'
+
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.save_file(response, output_path)
+        else:
+            return validate_output
 
 # ========================================================================
 # MAIL MERGE CLASS

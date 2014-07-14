@@ -103,6 +103,7 @@ class Utils:
         with open(filename, 'wb') as f:
             for chunk in response_stream.iter_content():
                 f.write(chunk)
+        return filename
 
     @staticmethod
     def get_filename(filename):
