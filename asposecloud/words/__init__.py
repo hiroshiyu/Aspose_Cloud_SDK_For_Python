@@ -7,6 +7,142 @@ from asposecloud import Product
 from asposecloud.common import Utils
 
 # ========================================================================
+# DOCUMENT CLASS
+# ========================================================================
+
+
+class Document:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'words/' + self.filename
+
+    def append_document(self, doc_list, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/appendDocument'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps(doc_list)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+    def get_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperties']['List']
+
+    def get_document_info(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = Utils.append_storage(self.base_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Document']
+
+    def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperty']
+
+    def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Value': property_value})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperty']
+
+    def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+# ========================================================================
 # EXTRACTOR CLASS
 # ========================================================================
 
@@ -136,7 +272,7 @@ class Extractor:
             return validate_output
 
     @staticmethod
-    def get_drawing_object(self, object_uri, output_path, remote_folder='', storage_type='Aspose', storage_name=None):
+    def get_drawing_object(object_uri, output_path, remote_folder='', storage_type='Aspose', storage_name=None):
         object_index = object_uri[-1:]
 
         str_uri = Product.product_uri + 'words/' + object_uri
