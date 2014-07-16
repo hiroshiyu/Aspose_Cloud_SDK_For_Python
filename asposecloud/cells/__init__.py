@@ -6,6 +6,104 @@ from asposecloud import Product
 from asposecloud.common import Utils
 
 # ========================================================================
+# TEXT EDITOR CLASS
+# ========================================================================
+
+
+class TextEditor:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'cells/' + self.filename
+
+    def get_text_items(self, worksheet_name=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        if worksheet_name is None:
+            str_uri = self.base_uri + '/textItems'
+        else:
+            str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/textItems'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return response['TextItems']['TextItemList']
+        else:
+            return validate_output
+
+    def find_text(self, text, worksheet_name=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        if worksheet_name is None:
+            str_uri = self.base_uri + '/findText'
+        else:
+            str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/findText'
+        qry = {'text': text}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return response['TextItems']['TextItemList']
+        else:
+            return validate_output
+
+    def replace_text(self, old_text, new_text, worksheet_name=None,
+                     remote_folder='', storage_type='Aspose', storage_name=None):
+        if worksheet_name is None:
+            str_uri = self.base_uri + '/replaceText'
+        else:
+            str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/replaceText'
+        qry = {'OldValue': old_text, 'NewValue': new_text}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return True
+        else:
+            return validate_output
+
+# ========================================================================
 # EXTRACTOR CLASS
 # ========================================================================
 
@@ -21,7 +119,7 @@ class Extractor:
         self.base_uri = Product.product_uri + 'cells/' + self.filename
 
     def get_autoshape(self, shape_index, worksheet_name, save_format, password=None,
-                           remote_folder='', storage_type='Aspose', storage_name=None):
+                      remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/autoshapes/' + str(shape_index)
         qry = {'format': save_format}
         if not password is None:
@@ -51,7 +149,7 @@ class Extractor:
             return validate_output
 
     def get_chart(self, chart_index, worksheet_name, save_format, password=None,
-                       remote_folder='', storage_type='Aspose', storage_name=None):
+                  remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index)
         qry = {'format': save_format}
         if not password is None:
@@ -81,7 +179,7 @@ class Extractor:
             return validate_output
 
     def get_oleobject(self, ole_index, worksheet_name, save_format, password=None,
-                           remote_folder='', storage_type='Aspose', storage_name=None):
+                      remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/oleobjects/' + str(ole_index)
         qry = {'format': save_format}
         if not password is None:
@@ -111,7 +209,7 @@ class Extractor:
             return validate_output
 
     def get_picture(self, picture_index, worksheet_name, save_format, password=None,
-                         remote_folder='', storage_type='Aspose', storage_name=None):
+                    remote_folder='', storage_type='Aspose', storage_name=None):
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/pictures/' + str(picture_index)
         qry = {'format': save_format}
         if not password is None:
