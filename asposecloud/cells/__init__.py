@@ -10,6 +10,143 @@ from asposecloud.common import Utils
 # ========================================================================
 
 
+class ChartEditor:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'cells/' + self.filename
+
+    def get_border(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name + \
+            '/charts/' + str(chart_index) + '/chartArea/border'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return response['Line']
+        else:
+            return validate_output
+
+    def get_fill_format(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name + \
+            '/charts/' + str(chart_index) + '/chartArea/fillFormat'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return response['FillFormat']
+        else:
+            return validate_output
+
+    def get_chart_area(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index) + '/chartArea'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return response['ChartArea']
+        else:
+            return validate_output
+
+    def add_chart(self, worksheet_name, chart_type, upper_left_row, upper_left_column,
+                  lower_right_row, lower_right_column, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts'
+        qry = {'chartType': chart_type, 'upperLeftRow': upper_left_row, 'upperLeftColumn': upper_left_column,
+               'lowerRightRow': lower_right_row, 'lowerRightColumn': lower_right_column}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+    def delete_chart(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        validate_output = Utils.validate_result(response)
+        if not validate_output:
+            return Utils.download_file(self.filename, self.filename, remote_folder, storage_type, storage_name)
+        else:
+            return validate_output
+
+
+# ========================================================================
+# TEXT EDITOR CLASS
+# ========================================================================
+
+
 class TextEditor:
 
     def __init__(self, filename):
