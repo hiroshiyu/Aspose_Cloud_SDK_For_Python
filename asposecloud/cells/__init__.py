@@ -6,6 +6,388 @@ from asposecloud import Product
 from asposecloud.common import Utils
 
 # ========================================================================
+# WORKBOOK CLASS
+# ========================================================================
+
+
+class Workbook:
+
+    def __init__(self, filename):
+        self.filename = filename
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'cells/' + self.filename
+
+    def add_worksheet(self, worksheet_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def remove_worksheet(self, worksheet_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets/' + worksheet_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def clear_modify_password(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/writeProtection'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Password': password})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, data=json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def set_modify_password(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/writeProtection'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Password': password})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def unprotect_workbook(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/protection'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Password': password})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, data=json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def protect_workbook(self, protection_type, password,
+                         remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/protection'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'ProtectionType': protection_type, 'Password': password})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def encrypt_workbook(self, encryption_type, password, key_length,
+                         remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/encryption'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'EncryptionType': encryption_type, 'KeyLength': key_length, 'Password': password})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.post(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+    def get_default_style(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/defaultStyle'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Style']
+
+    def get_name_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/names'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Names'])
+
+    def get_worksheets_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/worksheets'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Worksheets']['WorksheetList'])
+
+    @staticmethod
+    def process_smart_marker(workbook_name, data_filename,
+                             remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = Product.product_uri + 'cells/' + workbook_name
+        qry = {'xmlFile': data_filename}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response
+
+    @staticmethod
+    def create_from_smart_template(workbook_name, template_filename, data_filename,
+                                   remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = Product.product_uri + 'cells/' + workbook_name
+        qry = {'templateFile': template_filename, 'dataFile': data_filename}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response
+
+    @staticmethod
+    def create_workbook_from_template(workbook_name, template_filename,
+                                      remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = Product.product_uri + 'cells/' + workbook_name + '?templateFile=' + template_filename
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response
+
+    @staticmethod
+    def create_empty_workbook(workbook_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = Product.product_uri + 'cells/' + workbook_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, None, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response
+
+    def get_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperties']['DocumentPropertyList']
+
+    def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperty']
+
+    def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        json_data = json.dumps({'Value': property_value})
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.put(signed_uri, json_data, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['DocumentProperty']
+
+    def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/documentProperties/' + property_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.delete(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return True if response['Code'] == 200 else False
+
+# ========================================================================
 # TEXT EDITOR CLASS
 # ========================================================================
 
