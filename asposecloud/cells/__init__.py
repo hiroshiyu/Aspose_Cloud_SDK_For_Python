@@ -6,6 +6,490 @@ from asposecloud import Product
 from asposecloud.common import Utils
 
 # ========================================================================
+# WORKSHEET CLASS
+# ========================================================================
+
+
+class Worksheet:
+
+    def __init__(self, filename, worksheet_name):
+        self.filename = filename
+        self.worksheet_name = worksheet_name
+
+        if not filename:
+            raise ValueError("filename not specified")
+
+        self.base_uri = Product.product_uri + 'cells/' + self.filename + '/worksheets/' + self.worksheet_name
+
+    def get_pictures_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/pictures'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Pictures']['PictureList'])
+
+    def get_ole_objects_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/oleobjects'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['OleObjects']['OleObjectList'])
+
+    def get_charts_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/charts'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Charts']['ChartList'])
+
+    def get_comments_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/comments'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Comments']['CommentList'])
+
+    def get_hyperlinks_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/comments'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['Hyperlinks']['HyperlinkList'])
+
+    def get_mergedcells_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/mergedCells'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['MergedCells']['Count']
+
+    def get_validations_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/validations'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Validations']['Count']
+
+    def get_cell_style(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells/' + cell_name + '/style'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Style']
+
+    def get_cell(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells/' + cell_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Cell']
+
+    def get_autoshape(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/autoshapes/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['AutoShapes']
+
+    def get_chart(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/charts/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Chart']
+
+    def get_hyperlink(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/hyperlinks/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Hyperlink']
+
+    def get_ole_object(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/oleobjects/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['OleObject']
+
+    def get_picture(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/pictures/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Picture']
+
+    def get_validation(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/validations/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Validation']
+
+    def get_merged_cells(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/mergedCells/' + str(index)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['MergedCell']
+
+    def get_comment(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/comments/' + cell_name
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Comment']
+
+    def get_autoshapes_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/autoshapes'
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return len(response['AutoShapes']['AutoShapeList'])
+
+    def get_cells_count(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Cells']['CellCount']
+
+    def get_max_column(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Cells']['MaxColumn']
+
+    def get_max_row(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Cells']['MaxRow']
+
+    def get_cells_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Cells']['CellList']
+
+    def get_row_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells/rows'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Rows']['RowsList']
+
+    def get_columns_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        str_uri = self.base_uri + '/cells/columns'
+        qry = {'offset': offset, 'count': count}
+        str_uri = Utils.build_uri(str_uri, qry)
+        str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
+
+        signed_uri = Utils.sign(str_uri)
+        response = None
+        try:
+            response = requests.get(signed_uri, headers={
+                'content-type': 'application/json', 'accept': 'application/json'
+            })
+            response.raise_for_status()
+            response = response.json()
+        except requests.HTTPError as e:
+            print e
+            print response.content
+            exit(1)
+
+        return response['Columns']['ColumnsList']
+
+# ========================================================================
 # WORKBOOK CLASS
 # ========================================================================
 
