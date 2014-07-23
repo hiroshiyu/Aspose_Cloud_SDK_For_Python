@@ -13,12 +13,23 @@ from asposecloud import Product
 
 
 class Utils:
+    """
+    A common collection of utility function to perform various tasks.
+
+    """
 
     def __init__(self):
         return
 
     @staticmethod
     def build_uri(path, qry_data=None):
+        """
+        URI Builder - Accept path and query string to generate a URI.
+
+        :param path: e.g http://api.aspose.com/v1/testurl
+        :param qry_data: a dictionary which holds query string data e.g {'param1': 'value1', 'param2': 'value2'}
+        :return: returns a uri with query string e.g http://api.aspose.com/v1/testurl?param1=value1&param2=value2
+        """
         qry_str = ''
         for key, value in qry_data.iteritems():
             qry_str += str(key) + '=' + str(value) + '&'
@@ -31,6 +42,12 @@ class Utils:
 
     @staticmethod
     def validate_result(result):
+        """
+        Validates if an API call have any error in the body.
+
+        :param result: body of the response
+        :return: True or False
+        """
         if type(result) == requests.Response:
             result = result.content
         elif type(result) == dict:
@@ -48,11 +65,24 @@ class Utils:
 
     @staticmethod
     def upload_file_binary(local_file, uri):
+        """
+        Upload a local file to provided url
+
+        :param local_file: path/to/local/file on your local machine
+        :param uri: target uri to upload file
+        :return: Response object
+        """
         with open(local_file, 'rb') as payload:
             return requests.put(uri, payload, stream=True)
 
     @staticmethod
     def sign(url_to_sign):
+        """
+        Add Signature to the url for authentication.
+
+        :param url_to_sign:
+        :return: Returns Signed URL
+        """
         url_to_sign = url_to_sign.replace(" ", "%20")
         url = urlparse(url_to_sign)
 
@@ -74,6 +104,15 @@ class Utils:
 
     @staticmethod
     def append_storage(uri, remote_folder='', storage_type='Aspose', storage_name=''):
+        """
+        Utility function to help append storage parameters in URI
+
+        :param uri:
+        :param remote_folder:
+        :param storage_type:
+        :param storage_name:
+        :return:
+        """
 
         tmp_uri = None
 
@@ -100,6 +139,13 @@ class Utils:
 
     @staticmethod
     def save_file(response_stream, filename):
+        """
+        Save a response stream as local file
+
+        :param response_stream: File Stream
+        :param filename: File name along with path to store
+        :return: returns full path of newly created file
+        """
         with open(filename, 'wb') as f:
             for chunk in response_stream.iter_content():
                 f.write(chunk)
@@ -107,10 +153,26 @@ class Utils:
 
     @staticmethod
     def get_filename(filename):
+        """
+        Extract filename without extension
+
+        :param filename:
+        :return: filename without extension
+        """
         return os.path.splitext(os.path.basename(filename))[0]
 
     @staticmethod
     def download_file(remote_filename, output_filename, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Download a file from remote storage and save it on local storage.
+
+        :param remote_filename: filename on remote storage
+        :param output_filename: filename along with path to store on local storage
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return: output location of the downloaded file
+        """
         if remote_folder:
             remote_filename = remote_folder + '/' + remote_filename
 
