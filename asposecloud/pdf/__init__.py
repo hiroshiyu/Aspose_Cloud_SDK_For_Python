@@ -8,6 +8,10 @@ from asposecloud.common import Utils
 
 
 class Document:
+    """
+    Wrapper class for Aspose.PDF API Document Resource.
+    The Aspose.PDF API let's you manipulate PDF files.
+    """
 
     def __init__(self, filename):
         self.filename = filename
@@ -18,6 +22,14 @@ class Document:
         self.base_uri = Product.product_uri + 'pdf/' + self.filename
 
     def get_page_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Get count of pages in pdf file
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pages'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -38,6 +50,17 @@ class Document:
 
     def append_documents(self, append_file, start_page=None, end_page=None,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Append a pdf file to base pdf
+
+        :param append_file:
+        :param start_page:
+        :param end_page:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/appendDocument'
         qry = {'appendFile': append_file}
         if start_page:
@@ -68,6 +91,16 @@ class Document:
 
     @staticmethod
     def merge_documents(merged_filename, source_files, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Merge multiple pdf files
+
+        :param merged_filename:
+        :param source_files:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         json_data = json.dumps({'List': source_files})
 
@@ -91,6 +124,10 @@ class Document:
 
 
 class TextEditor:
+    """
+    Wrapper class for Aspose.PDF API for Text Editing features.
+    The Aspose.PDF API let's you manipulate PDF files.
+    """
 
     def __init__(self, filename):
         self.filename = filename
@@ -101,6 +138,15 @@ class TextEditor:
         self.base_uri = Product.product_uri + 'pdf/' + self.filename
 
     def get_fragment_count(self, page_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Count fragments in a pdf file on given page number
+
+        :param page_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pages/' + str(page_number) + '/fragments'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -120,6 +166,15 @@ class TextEditor:
         return len(response['TextItems']['List']) if response['TextItems']['List'] else 0
 
     def get_text(self, page_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Get text from give page number
+
+        :param page_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pages/' + str(page_number) + '/textitems'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -142,6 +197,15 @@ class TextEditor:
         return output_text
 
     def get_text_items(self, page_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Get text items from given page number
+
+        :param page_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pages/' + str(page_number) + '/textitems'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -162,6 +226,18 @@ class TextEditor:
 
     def replace_text(self, page_number, old_text, new_text, is_reg=False,
                      remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Replace text on any given page
+
+        :param page_number:
+        :param old_text:
+        :param new_text:
+        :param is_reg:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pages/' + str(page_number) + '/replaceText'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -188,7 +264,10 @@ class TextEditor:
 
 
 class Extractor:
-
+    """
+    Wrapper class for Aspose.PDF API Extraction features.
+    The Aspose.PDF API let's you manipulate PDF files.
+    """
     def __init__(self, filename):
         self.filename = filename
 
@@ -199,6 +278,19 @@ class Extractor:
 
     def get_image(self, page_number, image_index, save_format, width=None, height=None,
                   remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Get image from given page
+
+        :param page_number:
+        :param image_index:
+        :param save_format:
+        :param width:
+        :param height:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -235,6 +327,15 @@ class Extractor:
             return validate_output
 
     def get_image_count(self, page_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Count images on a given page
+
+        :param page_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not page_number:
             raise ValueError("page_number not specified")
 
@@ -257,6 +358,10 @@ class Extractor:
 
 
 class Converter:
+    """
+    Wrapper class for Aspose.PDF API.
+    The Aspose.PDF API let's you manipulate PDF files.
+    """
 
     def __init__(self, filename):
         self.filename = filename
@@ -267,6 +372,16 @@ class Converter:
         self.base_uri = Product.product_uri + 'pdf/' + self.filename
 
     def convert_to_image(self, page_number, save_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Convert a page to image
+
+        :param page_number:
+        :param save_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -300,6 +415,15 @@ class Converter:
             return validate_output
 
     def convert(self, save_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Convert a pdf file to any supported format
+
+        :param save_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -325,6 +449,13 @@ class Converter:
 
     @staticmethod
     def convert_local_file(input_file, save_format):
+        """
+        Convert a local pdf file to any supported format
+
+        :param input_file:
+        :param save_format:
+        :return:
+        """
         if not input_file:
             raise ValueError("input_file not specified")
 
