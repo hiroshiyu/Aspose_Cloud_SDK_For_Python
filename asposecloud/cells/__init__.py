@@ -23,6 +23,13 @@ class Worksheet:
         self.base_uri = Product.product_uri + 'cells/' + self.filename + '/worksheets/' + self.worksheet_name
 
     def get_pictures_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pictures'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -42,6 +49,13 @@ class Worksheet:
         return len(response['Pictures']['PictureList'])
 
     def get_ole_objects_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/oleobjects'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -61,6 +75,13 @@ class Worksheet:
         return len(response['OleObjects']['OleObjectList'])
 
     def get_charts_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/charts'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -80,6 +101,13 @@ class Worksheet:
         return len(response['Charts']['ChartList'])
 
     def get_comments_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/comments'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -99,6 +127,13 @@ class Worksheet:
         return len(response['Comments']['CommentList'])
 
     def get_hyperlinks_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/comments'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -118,6 +153,13 @@ class Worksheet:
         return len(response['Hyperlinks']['HyperlinkList'])
 
     def get_mergedcells_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/mergedCells'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -137,6 +179,13 @@ class Worksheet:
         return response['MergedCells']['Count']
 
     def get_validations_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/validations'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -156,6 +205,14 @@ class Worksheet:
         return response['Validations']['Count']
 
     def get_cell_style(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param cell_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells/' + cell_name + '/style'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -175,6 +232,14 @@ class Worksheet:
         return response['Style']
 
     def get_cell(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param cell_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells/' + cell_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -194,6 +259,14 @@ class Worksheet:
         return response['Cell']
 
     def get_autoshape(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/autoshapes/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -213,6 +286,14 @@ class Worksheet:
         return response['AutoShapes']
 
     def get_chart(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/charts/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -232,6 +313,14 @@ class Worksheet:
         return response['Chart']
 
     def get_hyperlink(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/hyperlinks/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -251,6 +340,14 @@ class Worksheet:
         return response['Hyperlink']
 
     def get_ole_object(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/oleobjects/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -270,6 +367,14 @@ class Worksheet:
         return response['OleObject']
 
     def get_picture(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/pictures/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -289,6 +394,14 @@ class Worksheet:
         return response['Picture']
 
     def get_validation(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/validations/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -308,6 +421,14 @@ class Worksheet:
         return response['Validation']
 
     def get_merged_cells(self, index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/mergedCells/' + str(index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -327,6 +448,14 @@ class Worksheet:
         return response['MergedCell']
 
     def get_comment(self, cell_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param cell_name:
+        :param remote_folder:
+        :param storage_type:
+        :param storage_name:
+        :return:
+        """
         str_uri = self.base_uri + '/comments/' + cell_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -346,6 +475,13 @@ class Worksheet:
         return response['Comment']
 
     def get_autoshapes_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/autoshapes'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -365,6 +501,15 @@ class Worksheet:
         return len(response['AutoShapes']['AutoShapeList'])
 
     def get_cells_count(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -386,6 +531,15 @@ class Worksheet:
         return response['Cells']['CellCount']
 
     def get_max_column(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -407,6 +561,15 @@ class Worksheet:
         return response['Cells']['MaxColumn']
 
     def get_max_row(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -428,6 +591,15 @@ class Worksheet:
         return response['Cells']['MaxRow']
 
     def get_cells_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -449,6 +621,15 @@ class Worksheet:
         return response['Cells']['CellList']
 
     def get_row_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells/rows'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -470,6 +651,15 @@ class Worksheet:
         return response['Rows']['RowsList']
 
     def get_columns_list(self, offset, count, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param offset:
+        :param count:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/cells/columns'
         qry = {'offset': offset, 'count': count}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -506,6 +696,14 @@ class Workbook:
         self.base_uri = Product.product_uri + 'cells/' + self.filename
 
     def add_worksheet(self, worksheet_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -525,6 +723,14 @@ class Workbook:
         return True if response['Code'] == 200 else False
 
     def remove_worksheet(self, worksheet_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -544,6 +750,14 @@ class Workbook:
         return True if response['Code'] == 200 else False
 
     def clear_modify_password(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/writeProtection'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -565,6 +779,14 @@ class Workbook:
         return True if response['Code'] == 200 else False
 
     def set_modify_password(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/writeProtection'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -586,6 +808,14 @@ class Workbook:
         return True if response['Code'] == 200 else False
 
     def unprotect_workbook(self, password, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/protection'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -608,6 +838,15 @@ class Workbook:
 
     def protect_workbook(self, protection_type, password,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param protection_type:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/protection'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -630,6 +869,16 @@ class Workbook:
 
     def encrypt_workbook(self, encryption_type, password, key_length,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param encryption_type:
+        :param password:
+        :param key_length:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/encryption'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -651,6 +900,13 @@ class Workbook:
         return True if response['Code'] == 200 else False
 
     def get_default_style(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/defaultStyle'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -670,6 +926,13 @@ class Workbook:
         return response['Style']
 
     def get_name_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/names'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -689,6 +952,13 @@ class Workbook:
         return len(response['Names'])
 
     def get_worksheets_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -710,6 +980,15 @@ class Workbook:
     @staticmethod
     def process_smart_marker(workbook_name, data_filename,
                              remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param workbook_name:
+        :param data_filename:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = Product.product_uri + 'cells/' + workbook_name
         qry = {'xmlFile': data_filename}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -733,6 +1012,16 @@ class Workbook:
     @staticmethod
     def create_from_smart_template(workbook_name, template_filename, data_filename,
                                    remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param workbook_name:
+        :param template_filename:
+        :param data_filename:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = Product.product_uri + 'cells/' + workbook_name
         qry = {'templateFile': template_filename, 'dataFile': data_filename}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -756,6 +1045,15 @@ class Workbook:
     @staticmethod
     def create_workbook_from_template(workbook_name, template_filename,
                                       remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param workbook_name:
+        :param template_filename:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = Product.product_uri + 'cells/' + workbook_name + '?templateFile=' + template_filename
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -776,6 +1074,14 @@ class Workbook:
 
     @staticmethod
     def create_empty_workbook(workbook_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param workbook_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = Product.product_uri + 'cells/' + workbook_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -795,6 +1101,13 @@ class Workbook:
         return response
 
     def get_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -814,6 +1127,14 @@ class Workbook:
         return response['DocumentProperties']['DocumentPropertyList']
 
     def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -833,6 +1154,15 @@ class Workbook:
         return response['DocumentProperty']
 
     def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param property_value:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -854,6 +1184,14 @@ class Workbook:
         return response['DocumentProperty']
 
     def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -888,6 +1226,15 @@ class ChartEditor:
         self.base_uri = Product.product_uri + 'cells/' + self.filename
 
     def get_border(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param chart_index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + \
             '/charts/' + str(chart_index) + '/chartArea/border'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -912,6 +1259,15 @@ class ChartEditor:
             return validate_output
 
     def get_fill_format(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param chart_index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + \
             '/charts/' + str(chart_index) + '/chartArea/fillFormat'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -936,6 +1292,15 @@ class ChartEditor:
             return validate_output
 
     def get_chart_area(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param chart_index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index) + '/chartArea'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -960,6 +1325,19 @@ class ChartEditor:
 
     def add_chart(self, worksheet_name, chart_type, upper_left_row, upper_left_column,
                   lower_right_row, lower_right_column, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param chart_type:
+        :param upper_left_row:
+        :param upper_left_column:
+        :param lower_right_row:
+        :param lower_right_column:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts'
         qry = {'chartType': chart_type, 'upperLeftRow': upper_left_row, 'upperLeftColumn': upper_left_column,
                'lowerRightRow': lower_right_row, 'lowerRightColumn': lower_right_column}
@@ -986,6 +1364,15 @@ class ChartEditor:
             return validate_output
 
     def delete_chart(self, worksheet_name, chart_index, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param chart_index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index)
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -1025,6 +1412,14 @@ class TextEditor:
         self.base_uri = Product.product_uri + 'cells/' + self.filename
 
     def get_text_items(self, worksheet_name=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if worksheet_name is None:
             str_uri = self.base_uri + '/textItems'
         else:
@@ -1051,6 +1446,15 @@ class TextEditor:
             return validate_output
 
     def find_text(self, text, worksheet_name=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param text:
+        :param worksheet_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if worksheet_name is None:
             str_uri = self.base_uri + '/findText'
         else:
@@ -1080,6 +1484,16 @@ class TextEditor:
 
     def replace_text(self, old_text, new_text, worksheet_name=None,
                      remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param old_text:
+        :param new_text:
+        :param worksheet_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if worksheet_name is None:
             str_uri = self.base_uri + '/replaceText'
         else:
@@ -1124,6 +1538,17 @@ class Extractor:
 
     def get_autoshape(self, shape_index, worksheet_name, save_format, password=None,
                       remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param shape_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/autoshapes/' + str(shape_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1154,6 +1579,17 @@ class Extractor:
 
     def get_chart(self, chart_index, worksheet_name, save_format, password=None,
                   remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param chart_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1184,6 +1620,17 @@ class Extractor:
 
     def get_oleobject(self, ole_index, worksheet_name, save_format, password=None,
                       remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param ole_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/oleobjects/' + str(ole_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1214,6 +1661,17 @@ class Extractor:
 
     def get_picture(self, picture_index, worksheet_name, save_format, password=None,
                     remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param picture_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/pictures/' + str(picture_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1259,6 +1717,17 @@ class Converter:
 
     def autoshape_to_image(self, shape_index, worksheet_name, save_format, password=None,
                            remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param shape_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/autoshapes/' + str(shape_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1289,6 +1758,17 @@ class Converter:
 
     def chart_to_image(self, chart_index, worksheet_name, save_format, password=None,
                        remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param chart_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/charts/' + str(chart_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1319,6 +1799,17 @@ class Converter:
 
     def oleobject_to_image(self, ole_index, worksheet_name, save_format, password=None,
                            remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param ole_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/oleobjects/' + str(ole_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1349,6 +1840,17 @@ class Converter:
 
     def picture_to_image(self, picture_index, worksheet_name, save_format, password=None,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param picture_index:
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/worksheets/' + worksheet_name + '/pictures/' + str(picture_index)
         qry = {'format': save_format}
         if not password is None:
@@ -1379,6 +1881,16 @@ class Converter:
 
     def convert_to_image(self, worksheet_name, save_format, password=None,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param worksheet_name:
+        :param save_format:
+        :param password:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -1410,6 +1922,14 @@ class Converter:
             return validate_output
 
     def convert(self, save_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param save_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -1438,6 +1958,12 @@ class Converter:
 
     @staticmethod
     def convert_local_file(input_file, save_format):
+        """
+
+        :param input_file:
+        :param save_format:
+        :return:
+        """
         if not input_file:
             raise ValueError("input_file not specified")
 
