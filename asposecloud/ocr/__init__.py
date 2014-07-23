@@ -6,6 +6,11 @@ from asposecloud.common import Utils
 
 
 class Extractor:
+    """
+    Wrapper class for Aspose.OCR for Cloud API.
+    The Aspose.OCR for Cloud let's you extract text from image.
+    """
+
     def __init__(self, filename):
         self.filename = filename
 
@@ -15,6 +20,15 @@ class Extractor:
         self.base_uri = Product.product_uri + 'ocr/' + self.filename + '/recognize'
 
     def extract(self, remote_folder='', storage_type='Aspose', storage_name=None, **kwargs):
+        """
+        Extract text from image
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :param kwargs:
+        :return: Text
+        """
 
         language = kwargs.get('language')
         use_default_dictionaries = kwargs.get('use_default_dictionaries')
@@ -48,6 +62,12 @@ class Extractor:
 
     @staticmethod
     def extract_from_local_file(local_file):
+        """
+        Extract text from image using a local file.
+
+        :param local_file:
+        :return: Text
+        """
         str_uri = Product.product_uri + 'ocr/recognize'
 
         signed_uri = Utils.sign(str_uri)
@@ -60,6 +80,12 @@ class Extractor:
 
     @staticmethod
     def extract_from_url(url):
+        """
+        Extract text from image using url
+
+        :param url:
+        :return: Text
+        """
         str_uri = Product.product_uri + 'ocr/recognize?url=' + url
 
         signed_uri = Utils.sign(str_uri)
