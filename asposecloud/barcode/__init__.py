@@ -7,11 +7,31 @@ from asposecloud.common import Utils
 
 
 class Builder:
+    """
+    Wrapper class for Aspose.Barcode for Cloud API.
+    The Aspose.Barcode for Cloud let's you generate Barcodes.
+    """
+
     def __init__(self):
         self.base_uri = Product.product_uri + 'barcode'
 
     def generate(self, code_text, symbology='QR', image_format='png', x_res=None, y_res=None, x_dim=None,
                  y_dim=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Generate Barcode
+
+        :param code_text:
+        :param symbology:
+        :param image_format:
+        :param x_res:
+        :param y_res:
+        :param x_dim:
+        :param y_dim:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not code_text:
             raise ValueError("code_text not specified.")
 
@@ -42,6 +62,11 @@ class Builder:
 
 
 class Reader:
+    """
+    Wrapper class for Aspose.Barcode for Cloud API.
+    The Aspose.Barcode for Cloud let's you read Barcodes.
+    """
+
     def __init__(self, filename):
         self.filename = filename
 
@@ -51,6 +76,15 @@ class Reader:
         self.base_uri = Product.product_uri + 'barcode'
 
     def read(self, symbology=None, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+        Read a Barcode
+
+        :param symbology:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/' + self.filename + '/recognize'
         if symbology:
             str_uri += '?type=' + symbology
@@ -65,6 +99,13 @@ class Reader:
 
     @staticmethod
     def read_from_local_image(local_image, symbology):
+        """
+        Read barcode from local image
+
+        :param local_image:
+        :param symbology:
+        :return: Text of barcode
+        """
         if not local_image:
             raise ValueError("local_image not specified")
 
