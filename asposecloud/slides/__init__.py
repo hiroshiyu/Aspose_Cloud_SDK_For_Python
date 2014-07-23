@@ -23,6 +23,13 @@ class Document:
         self.base_uri = Product.product_uri + 'slides/' + self.filename
 
     def get_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         str_uri = self.base_uri + '/documentProperties'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -42,6 +49,14 @@ class Document:
         return response['DocumentProperties']['List']
 
     def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -61,6 +76,15 @@ class Document:
         return response['DocumentProperty']
 
     def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param property_value:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         json_data = json.dumps({'Value': property_value})
 
@@ -82,6 +106,14 @@ class Document:
         return response['DocumentProperty']
 
     def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -101,6 +133,13 @@ class Document:
         return True if response['Code'] == 200 else False
 
     def delete_all_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         str_uri = self.base_uri + '/documentProperties'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -120,6 +159,14 @@ class Document:
         return True if response['Code'] == 200 else False
 
     def add_custom_property(self, properties_list, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param properties_list:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         json_data = json.dumps(properties_list)
 
@@ -141,6 +188,13 @@ class Document:
         return response
 
     def get_slide_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/slides'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -161,6 +215,16 @@ class Document:
 
     def replace_text(self, slide_number, old_text, new_text,
                      remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param old_text:
+        :param new_text:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/slides/' + str(slide_number) + '/replaceText'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -186,6 +250,14 @@ class Document:
             return validate_output
 
     def get_text_items(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/slides/' + str(slide_number) + '/textItems'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -220,6 +292,13 @@ class Extractor:
         self.base_uri = Product.product_uri + 'slides/' + self.filename
 
     def get_image_count(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         str_uri = self.base_uri + '/images'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
@@ -239,6 +318,14 @@ class Extractor:
         return len(response['Images']['List']) if response['Images']['List'] else 0
 
     def get_slide_image_count(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -261,6 +348,14 @@ class Extractor:
         return len(response['Images']['List']) if response['Images']['List'] else 0
 
     def get_shapes(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -283,6 +378,14 @@ class Extractor:
         return response['ShapeList']['ShapesLinks']
 
     def get_color_scheme(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -305,6 +408,14 @@ class Extractor:
         return response['ColorScheme']
 
     def get_font_scheme(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -327,6 +438,14 @@ class Extractor:
         return response['FontScheme']
 
     def get_format_scheme(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -350,6 +469,15 @@ class Extractor:
 
     def get_placeholder(self, slide_number, placeholder_index,
                         remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param placeholder_index:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -375,6 +503,14 @@ class Extractor:
         return response['Placeholder']
 
     def get_placeholder_count(self, slide_number, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
 
         if not slide_number:
             raise ValueError("slide_number not specified")
@@ -412,6 +548,15 @@ class Converter:
         self.base_uri = Product.product_uri + 'slides/' + self.filename
 
     def convert(self, slide_number, save_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param save_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -445,6 +590,17 @@ class Converter:
 
     def convert_to_image(self, slide_number, save_format, width=None, height=None,
                          remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param slide_number:
+        :param save_format:
+        :param width:
+        :param height:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
