@@ -22,6 +22,14 @@ class Document:
         self.base_uri = Product.product_uri + 'words/' + self.filename
 
     def append_document(self, doc_list, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param doc_list:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/appendDocument'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -47,6 +55,13 @@ class Document:
             return validate_output
 
     def get_properties(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -66,6 +81,13 @@ class Document:
         return response['DocumentProperties']['List']
 
     def get_document_info(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = Utils.append_storage(self.base_uri, remote_folder, storage_type, storage_name)
 
         signed_uri = Utils.sign(str_uri)
@@ -84,6 +106,14 @@ class Document:
         return response['Document']
 
     def get_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -103,6 +133,15 @@ class Document:
         return response['DocumentProperty']
 
     def set_property(self, property_name, property_value, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param property_value:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -124,6 +163,14 @@ class Document:
         return response['DocumentProperty']
 
     def delete_property(self, property_name, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param property_name:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/documentProperties/' + property_name
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -158,6 +205,13 @@ class Extractor:
         self.base_uri = Product.product_uri + 'words/' + self.filename
 
     def get_text(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/textItems'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -180,6 +234,13 @@ class Extractor:
         return output_text
 
     def get_drawing_object_list(self, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/drawingObjects'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -199,6 +260,15 @@ class Extractor:
         return response['DrawingObjects']['List']
 
     def get_ole_data(self, ole_index, ole_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param ole_index:
+        :param ole_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/drawingObjects/' + str(ole_index) + '/oleData'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -223,6 +293,15 @@ class Extractor:
             return validate_output
 
     def get_image_data(self, image_index, image_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param image_index:
+        :param image_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/drawingObjects/' + str(image_index) + '/imagedata'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -248,6 +327,15 @@ class Extractor:
 
     def convert_drawing_object(self, object_index, render_format,
                                remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param object_index:
+        :param render_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/drawingObjects/' + str(object_index) + '?format=' + render_format
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -273,6 +361,15 @@ class Extractor:
 
     @staticmethod
     def get_drawing_object(object_uri, output_path, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param object_uri:
+        :param output_path:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         object_index = object_uri[-1:]
 
         str_uri = Product.product_uri + 'words/' + object_uri
@@ -339,6 +436,15 @@ class MailMerge:
         self.base_uri = Product.product_uri + 'words/' + self.filename
 
     def execute(self, str_xml, with_regions=False, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param str_xml:
+        :param with_regions:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not str_xml:
             raise ValueError("str_xml not specified")
 
@@ -366,6 +472,15 @@ class MailMerge:
             return validate_output
 
     def execute_template(self, str_xml, with_regions=False, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param str_xml:
+        :param with_regions:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not str_xml:
             raise ValueError("str_xml not specified")
 
@@ -408,6 +523,15 @@ class Builder:
         self.base_uri = Product.product_uri + 'words/' + self.filename
 
     def insert_watermark_image(self, image_file, angle, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param image_file:
+        :param angle:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/insertWatermarkText'
         qry = {'imageFile': image_file, 'rotationAngle': angle}
         str_uri = Utils.build_uri(str_uri, qry)
@@ -433,6 +557,15 @@ class Builder:
             return validate_output
 
     def insert_watermark_text(self, text, angle, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param text:
+        :param angle:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/insertWatermarkText'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -459,6 +592,17 @@ class Builder:
 
     def replace_text(self, old_text, new_text, match_case=False, match_whole_word=False,
                      remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param old_text:
+        :param new_text:
+        :param match_case:
+        :param match_whole_word:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         str_uri = self.base_uri + '/replaceText'
         str_uri = Utils.append_storage(str_uri, remote_folder, storage_type, storage_name)
 
@@ -500,6 +644,14 @@ class Converter:
         self.base_uri = Product.product_uri + 'words/' + self.filename
 
     def convert(self, save_format, remote_folder='', storage_type='Aspose', storage_name=None):
+        """
+
+        :param save_format:
+        :param remote_folder: storage path to operate
+        :param storage_type: type of storage e.g Aspose, S3
+        :param storage_name: name of storage e.g. MyAmazonS3
+        :return:
+        """
         if not save_format:
             raise ValueError("save_format not specified")
 
@@ -529,6 +681,12 @@ class Converter:
 
     @staticmethod
     def convert_local_file(input_file, save_format):
+        """
+
+        :param input_file:
+        :param save_format:
+        :return:
+        """
         if not input_file:
             raise ValueError("input_file not specified")
 
